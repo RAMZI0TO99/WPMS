@@ -1,0 +1,34 @@
+# Python / Environments
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+ENV/
+
+# IDE / Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Datasets and YOLO Training Runs
+dataset*/
+runs/
+videos/
+
+# Weights / Model files
+*.pt
+*.onnx
+
+# Databases
+*.db
+*.sqlite
+*.sqlite3
+
+# OS generated files
+.DS_Store
+Thumbs.db
