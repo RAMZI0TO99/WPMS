@@ -20,9 +20,10 @@ dataset*/
 runs/
 videos/
 
-# Weights / Model files
+# Weights / Model files (large binary files — download or train locally)
 *.pt
 *.onnx
+*.engine
 
 # Databases
 *.db
@@ -32,3 +33,9 @@ videos/
 # OS generated files
 .DS_Store
 Thumbs.db
+
+# Diagnostic / scratch scripts
+check_gpu.py
+
+# uv.lock is intentionally committed for reproducibility
+# (do NOT add uv.lock here)
