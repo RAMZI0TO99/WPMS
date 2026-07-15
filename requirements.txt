@@ -1,0 +1,10 @@
+--extra-index-url https://download.pytorch.org/whl/cu128
+torch>=2.0.0
+torchvision>=0.15.0
+ultralytics>=8.0.0
+opencv-python>=4.8.0
+streamlit>=1.30.0
+pandas>=2.0.0
+lapx>=0.5.5
+deepface>=0.0.84
+tf-keras>=2.21.0
