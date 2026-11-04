@@ -123,8 +123,15 @@ An optional [TensorRT export helper](src/export_engine.py) is included; it requi
 ## Limitations and validation
 
 - Timestamps use processing wall-clock time. Capture keeps recent frames and may skip intermediate frames, so recorded-video session durations do not represent the source video's timeline.
-- Pending observations are counted without resetting on missed frames. `--min-frames` is therefore not a strict consecutive-frame guarantee.
 - The database merges a returning track's session when its previous exit was less than 60 seconds ago. Tracker ID changes or reuse can split or merge sessions incorrectly.
 - On startup, previously open sessions are closed with their entry time as the exit time. These records are cleanup artifacts rather than measured attendance durations.
-- Detection, face matching, occlusion handling, and tracking need evaluation on the intended camera conditions. There is no committed automated test suite, sample dataset, or published accuracy/latency benchmark.
+- Detection, face matching, occlusion handling, and tracking need evaluation on the intended camera conditions. There is no committed sample dataset or published accuracy/latency benchmark.
 - These instructions reflect the source and manifests. A full installation, webcam run, training run, and dashboard session have not been independently validated as part of the documentation update.
+
+The state-machine regression tests need only Python's standard library and run without model weights or cameras:
+
+```bash
+python -m unittest discover -s tests -v
+```
+
+These tests cover consecutive-frame confirmation, missed frames, duplicate observations, independent track IDs, and the exit grace period. GitHub Actions runs them on Python 3.10 and 3.13.
