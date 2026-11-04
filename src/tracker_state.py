@@ -22,6 +22,7 @@ class StateMachine:
         self.active_tracks = {}
         # track_id -> consecutive frame count (tracks seen but not yet confirmed)
         self._pending_tracks = {}
+        self._seen_pending_tracks = set()
 
     def update_track(self, track_id, role):
         """
@@ -35,6 +36,9 @@ class StateMachine:
             # Already confirmed — just refresh last-seen timestamp.
             self.active_tracks[track_id] = current_time
         else:
+            if track_id in self._seen_pending_tracks:
+                return
+            self._seen_pending_tracks.add(track_id)
             # Track is pending confirmation — increment frame count.
             self._pending_tracks[track_id] = self._pending_tracks.get(track_id, 0) + 1
 
@@ -72,14 +76,10 @@ class StateMachine:
         for track_id in expired_ids:
             self._trigger_exit(track_id, current_time)
 
-        # Also purge stale pending tracks (they vanished before hitting min_frames).
-        stale_pending = [tid for tid in list(self._pending_tracks)
-                         if tid not in self.active_tracks]
-        # Pending tracks are implicitly dropped when they stop being seen.
-        # We clear the entire pending dict each process_exits call if the track
-        # is no longer being reported — inference loop only calls update_track
-        # for currently visible tracks, so pending tracks not updated this frame
-        # will naturally age out. No explicit cleanup needed.
+        for track_id in list(self._pending_tracks):
+            if track_id not in self._seen_pending_tracks:
+                del self._pending_tracks[track_id]
+        self._seen_pending_tracks.clear()
 
         return expired_ids
 
