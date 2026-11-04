@@ -80,7 +80,7 @@ Place manager reference photos in `known_managers/` at the project root, using t
 
 The monitor creates the directory if absent. Without photos, a manager-class detection can still be logged as `Manager (Unknown)`. With generic `yolov8n.pt`, role identification instead depends on face matches. DeepFace may download its model weights on first use.
 
-Use photos and video authorized for this demonstration. `known_managers/` is not currently excluded by `.gitignore`; keep personal photos and generated face indexes out of commits.
+Use photos and video authorized for this demonstration. Git ignores `known_managers/`, including reference photos and generated face indexes. Keep personal data out of commits.
 
 ### 3. Review sessions
 
